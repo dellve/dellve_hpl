@@ -1,6 +1,6 @@
 # DELLve HPL
 
-DELLve HPL Benchmark Plugin
+DELLve HPL Plugin
 
 Installation
 ------------
