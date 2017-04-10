@@ -1,7 +1,6 @@
 
 import dellve
 import psutil
-import psutil.subprocess as sp
 
 # TODO: de-hardcode this...
 HPL_DIR = '/opt/hpl-2.1_cuda-6.5_gcc-4.4.7_ompi-1.6.5_mkl_ext_pkg_v1'
@@ -12,7 +11,8 @@ class HPL(dellve.Benchmark):
     name = 'HPL'
 
     def routine(self):
-        mpi_process = psutil.Popen(HPL_CMD.split(), cwd=HPL_DIR, stdout=sp.PIPE)
+        mpi_process = psutil.Popen(HPL_CMD.split(), cwd=HPL_DIR, 
+                                   stdout=psutil.subprocess.PIPE)
         
         try:
             out, err = mpi_process.communicate()
