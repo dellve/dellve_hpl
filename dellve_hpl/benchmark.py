@@ -1,12 +1,14 @@
 
 import dellve
 import psutil
-import os
-import subprocess as sp
+import psutil.subprocess as sp
+
+# TODO: de-hardcode this...
 HPL_DIR = '/opt/hpl-2.1_cuda-6.5_gcc-4.4.7_ompi-1.6.5_mkl_ext_pkg_v1'
 HPL_CMD = 'mpirun -n 2 --bind-to none run_linpack_10_core_per_gpu_0_2'
 
 class HPL(dellve.Benchmark): 
+    
     name = 'HPL'
 
     def routine(self):
