@@ -1,5 +1,6 @@
 
 import dellve
+import psutil
 import os
 import subprocess as sp
 HPL_DIR = '/opt/hpl-2.1_cuda-6.5_gcc-4.4.7_ompi-1.6.5_mkl_ext_pkg_v1'
@@ -9,12 +10,17 @@ class HPL(dellve.Benchmark):
     name = 'HPL'
 
     def routine(self):
-        p = sp.Popen(HPL_CMD.split(), cwd=HPL_DIR, stdout=sp.PIPE)
+        mpi_process = psutil.Popen(HPL_CMD.split(), cwd=HPL_DIR, stdout=sp.PIPE)
         
         try:
-            our, err = p.communicate()
+            out, err = mpi_process.communicate()
         except dellve.BenchmarkInterrupt:
-            p.terminate()
+            print 'Stopping HPL...'
+            for mpi_child_process in mpi_process.children():
+                mpi_child_process.kill()
+                print 'Killed HPL process %d' % mpi_child_process.pid
+            mpi_process.kill()
+            print 'Killed MPI process %d' % mpi_process.pid
         else:
             self.progress = 100
 
