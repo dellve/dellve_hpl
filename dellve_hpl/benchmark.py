@@ -11,6 +11,8 @@ import re
 class HPL(dellve.Benchmark):
 
     name = 'HPL'
+    
+    config = dellve.BenchmarkConfig([])
 
     def routine(self):
         mpi_process = psutil.Popen(HPL_CMD.split(), cwd=HPL_DIR,
